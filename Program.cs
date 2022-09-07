@@ -6,15 +6,19 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Exceptions;
 using Microsoft.VisualBasic;
+using TgBot00;
+
 
 namespace TelegramBotExperiments
 {
 
-    class Program
+
+     class Program
     {
-        #region Move along, nothing to see here!
-        static ITelegramBotClient bot = new TelegramBotClient("5739987160:AAGvqe5kf7o3uEPEY9jpNeObHJ00Btp3_PE");
-        #endregion
+
+        static string file = System.IO.File.ReadAllText(@"Token.txt");
+        static ITelegramBotClient bot = new TelegramBotClient(file.ToString());
+
         public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             // Некоторые действия
