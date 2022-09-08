@@ -7,10 +7,12 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Exceptions;
 using Microsoft.VisualBasic;
 using TgBot00;
-
+using Telegram.Bot.Types.ReplyMarkups;
+using Microsoft.Data.Sqlite;
 
 namespace TelegramBotExperiments
 {
+
 
 
      class Program
@@ -28,15 +30,21 @@ namespace TelegramBotExperiments
                 var message = update.Message;
                 if (message.Text.ToLower() == "/start")
                 {
-                    await botClient.SendTextMessageAsync(message.Chat, "Здарова");
+                    await botClient.SendTextMessageAsync(message.Chat, "Приветствую 🎶 ");
+                    await botClient.SendTextMessageAsync(message.Chat, "Какой плейлист желаете послушать сегодня? 🔉 ");
                     return;
+                    
                 }
                 if (message.Text.ToLower() == "/bb")
                 {
-                    await botClient.SendTextMessageAsync(message.Chat, "Пока");
+                    await botClient.SendTextMessageAsync(message.Chat, "До свидания");
                     return;
                 }
-                await botClient.SendTextMessageAsync(message.Chat, "???");
+                await botClient.SendTextMessageAsync(message.Chat, "Не могу уловить ваши ноты");
+
+
+
+
             }
         }
 
@@ -49,6 +57,7 @@ namespace TelegramBotExperiments
 
         static void Main(string[] args)
         {
+            
             Console.WriteLine("Запущен бот " + bot.GetMeAsync().Result.FirstName);
 
             var cts = new CancellationTokenSource();
@@ -64,6 +73,11 @@ namespace TelegramBotExperiments
                 cancellationToken
             );
             Console.ReadLine();
+            using (var connection = new SqliteConnection("Data Source=usersdata.db"))
+            {
+                connection.Open();
+            }
+            Console.Read();
         }
     }
 }
