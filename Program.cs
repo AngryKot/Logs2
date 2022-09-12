@@ -9,6 +9,7 @@ using Microsoft.VisualBasic;
 using TgBot00;
 using Telegram.Bot.Types.ReplyMarkups;
 using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace TelegramBotExperiments
 {
@@ -21,8 +22,11 @@ namespace TelegramBotExperiments
         static string file = System.IO.File.ReadAllText(@"Token.txt");
         static ITelegramBotClient bot = new TelegramBotClient(file.ToString());
 
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
+            logger.Debug("log {0}", "/start /bb");
             // Некоторые действия
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
             if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
@@ -59,6 +63,8 @@ namespace TelegramBotExperiments
         {
             
             Console.WriteLine("Запущен бот " + bot.GetMeAsync().Result.FirstName);
+
+            logger.Debug("log {0}", "Event handler");
 
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
